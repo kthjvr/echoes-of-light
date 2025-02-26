@@ -234,7 +234,7 @@ function Board() {
             <img
               src={card.img}
               alt="card"
-              className="transition-transform duration-500 ease-in-out transform w-24 h-24 md:w-28 md:h-32"
+              className="transition-transform duration-500 ease-in-out transform w-24 h-24 md:w-28 md:h-32 rounded"
             />
           ) : (
             <div className="card-back card bg-gray-200 hover:bg-gray-300 cursor-pointer rounded w-24 h-24 md:w-28 md:h-32">
