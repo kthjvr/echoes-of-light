@@ -8,7 +8,7 @@ const RestartButton: React.FC<RestartButtonProps> = ({ onRestart }) => {
   return (
     <div className="flex justify-center mt-4">
       <button
-        className="hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:text-white dark:bg-blue-500"
+        className="hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         onClick={onRestart}
       >
         Restart Game
