@@ -1,17 +1,19 @@
 import React from "react";
 
 interface RestartButtonProps {
-  onRestart: () => void; // Function to call when the button is clicked
+  onRestart: () => void;
+  disabled?: boolean; 
 }
 
-const RestartButton: React.FC<RestartButtonProps> = ({ onRestart }) => {
+const RestartButton: React.FC<RestartButtonProps> = ({ onRestart, disabled }) => {
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-end mt-4 ">
       <button
-        className="hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="hover:bg-blue-400 bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         onClick={onRestart}
+        disabled={disabled}
       >
-        Restart Game
+        Restart Board
       </button>
     </div>
   );

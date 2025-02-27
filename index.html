@@ -4,14 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@3/tsparticles.preset.stars.bundle.min.js"></script>
     <title>Flip-A-Doodle-Doo</title>
   </head>
-  <body>
-    <div id="root"></div>
+
+  <body class='bg-gradient-to-b from-neutral-900  to-[#7928ca] '>
+    <div id="root" class="z-10"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>(async () => {
+      await loadStarsPreset(tsParticles);
+    
+      await tsParticles.load({
+        id: "tsparticles",
+        options: {
+          preset: "stars",
+          background: {
+              color: {
+                value: "linear-gradient(to bottom, #7928ca, #000)" // Your gradient
+              }
+            },
+        },
+      });
+    })();</script>
   </body>
 
-  <footer class="mt-6">
+  <footer class="mt-6 z-10">
     <div class="w-full mx-auto max-w-screen-xl p-4 flex justify-center">
       <span class="text-sm text-gray-500 text-center dark:text-gray-400"
         >© 2025

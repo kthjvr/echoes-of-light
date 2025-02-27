@@ -21,18 +21,14 @@ interface Card {
   isFlipped: boolean;
 }
 
-interface BoardTwoProps {
-  onComplete: () => void; // Define the type of the onComplete prop
-}
-
-const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
+const BoardThree: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const scoreSpan = useRef(null);
-  const totalPairs = 6;
+  const totalPairs = 9;
 
   // for sound effects
   const [playFlip] = useSound(popSfx, { volume: 1 }); 
@@ -45,75 +41,111 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
   const cardData = useMemo(
     () => [
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/5.png?updatedAt=1740544753718",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/9.png?updatedAt=1740645677437",
         id: uuidv4(),
         alt: 1,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/3.png?updatedAt=1740544753689",
-        id: uuidv4(),
-        alt: 2,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/2.png?updatedAt=1740544753528",
-        id: uuidv4(),
-        alt: 3,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/1.png?updatedAt=1740544754066",
-        id: uuidv4(),
-        alt: 4,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/6.png?updatedAt=1740544753899",
-        id: uuidv4(),
-        alt: 5,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/4.png?updatedAt=1740544753436",
-        id: uuidv4(),
-        alt: 6,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/5.png?updatedAt=1740544753718",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/9.png?updatedAt=1740645677437",
         id: uuidv4(),
         alt: 1,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/3.png?updatedAt=1740544753689",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/10.png?updatedAt=1740645678140",
         id: uuidv4(),
         alt: 2,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/2.png?updatedAt=1740544753528",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/10.png?updatedAt=1740645678140",
+        id: uuidv4(),
+        alt: 2,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/11.png?updatedAt=1740645678654",
         id: uuidv4(),
         alt: 3,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/1.png?updatedAt=1740544754066",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/11.png?updatedAt=1740645678654",
+        id: uuidv4(),
+        alt: 3,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/12.png?updatedAt=1740645678216",
         id: uuidv4(),
         alt: 4,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/6.png?updatedAt=1740544753899",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/12.png?updatedAt=1740645678216",
+        id: uuidv4(),
+        alt: 4,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/13.png?updatedAt=1740645678067",
         id: uuidv4(),
         alt: 5,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/4.png?updatedAt=1740544753436",
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/13.png?updatedAt=1740645678067",
+        id: uuidv4(),
+        alt: 5,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/14.png?updatedAt=1740645677441",
         id: uuidv4(),
         alt: 6,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/14.png?updatedAt=1740645677441",
+        id: uuidv4(),
+        alt: 6,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/15.png?updatedAt=1740645676040",
+        id: uuidv4(),
+        alt: 7,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/15.png?updatedAt=1740645676040",
+        id: uuidv4(),
+        alt: 7,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/16.png?updatedAt=1740645677578",
+        id: uuidv4(),
+        alt: 8,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/16.png?updatedAt=1740645677578",
+        id: uuidv4(),
+        alt: 8,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/17.png?updatedAt=1740645677865",
+        id: uuidv4(),
+        alt: 9,
+        isFlipped: false,
+      },
+      {
+        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/17.png?updatedAt=1740645677865",
+        id: uuidv4(),
+        alt: 9,
         isFlipped: false,
       },
     ],
@@ -204,12 +236,9 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
     // Check if all pairs are matched
     if (score === totalPairs) {
       setIsGameOver(true);
-      setTimeout(() => {
-        onComplete();
-      }, 5000);
       console.log("isGameOver:", isGameOver); // Check if isGameOver is true
     }
-  }, [flippedCards, cards, score, isGameOver, wow, onComplete]);
+  }, [flippedCards, cards, score, isGameOver, wow]);
 
   useEffect(() => {
     if (isGameOver) {
@@ -265,7 +294,7 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
       {isGameOver && (
         <>
           <div className="gameover">You won!</div>
-          <div>Loading next level...</div>
+          <div>Completed!</div>
         </>
       )}
       </div>
@@ -279,7 +308,7 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
         </h2>
       </div>
       <div
-        className="grid grid-cols-3 gap-2 p-2 md:grid-cols-4 md:gap-4"
+        className="grid grid-cols-3 gap-2 p-2 md:grid-cols-6 md:gap-4"
         id="grid"
       >
         {cards.map(createCard)}
@@ -293,4 +322,4 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
   );
 }
 
-export default BoardTwo;
+export default BoardThree;

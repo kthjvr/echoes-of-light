@@ -21,18 +21,19 @@ interface Card {
   isFlipped: boolean;
 }
 
-interface BoardTwoProps {
+interface BoardOneProps {
   onComplete: () => void; // Define the type of the onComplete prop
+  // onFirstClick: () => void;
 }
 
-const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
+const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const scoreSpan = useRef(null);
-  const totalPairs = 6;
+  const totalPairs = 3;
 
   // for sound effects
   const [playFlip] = useSound(popSfx, { volume: 1 }); 
@@ -57,27 +58,9 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/2.png?updatedAt=1740544753528",
-        id: uuidv4(),
-        alt: 3,
-        isFlipped: false,
-      },
-      {
         img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/1.png?updatedAt=1740544754066",
         id: uuidv4(),
         alt: 4,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/6.png?updatedAt=1740544753899",
-        id: uuidv4(),
-        alt: 5,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/4.png?updatedAt=1740544753436",
-        id: uuidv4(),
-        alt: 6,
         isFlipped: false,
       },
       {
@@ -93,29 +76,12 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/2.png?updatedAt=1740544753528",
-        id: uuidv4(),
-        alt: 3,
-        isFlipped: false,
-      },
-      {
         img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/1.png?updatedAt=1740544754066",
         id: uuidv4(),
         alt: 4,
         isFlipped: false,
       },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/6.png?updatedAt=1740544753899",
-        id: uuidv4(),
-        alt: 5,
-        isFlipped: false,
-      },
-      {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/4.png?updatedAt=1740544753436",
-        id: uuidv4(),
-        alt: 6,
-        isFlipped: false,
-      },
+
     ],
     []
   );
@@ -171,8 +137,12 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
 
       // Then, add the cardId to flippedCards
       setFlippedCards((prevFlippedCards) => [...prevFlippedCards, cardId]);
+
+      // if (flippedCards.length === 1) {
+      //   onFirstClick();
+      // }
     },
-    [isGameOver, flippedCards, cards]
+    [isGameOver, flippedCards, cards ]
   );
 
   useEffect(() => {
@@ -203,7 +173,8 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
 
     // Check if all pairs are matched
     if (score === totalPairs) {
-      setIsGameOver(true);
+
+    setIsGameOver(true);
       setTimeout(() => {
         onComplete();
       }, 5000);
@@ -245,7 +216,7 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
             <img
               src={card.img}
               alt="card"
-              className="transition-transform duration-500 ease-in-out transform w-24 h-24 md:w-28 md:h-32 rounded"
+              className="transition-transform duration-500 ease-in-out transform rounded w-24 h-24 md:w-28 md:h-32 "
             />
           ) : (
             <div className="card-back card bg-gray-200 hover:bg-gray-300 cursor-pointer rounded w-24 h-24 md:w-28 md:h-32">
@@ -259,7 +230,7 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
   );
 
   return (
-    <div className="mx-auto z-10">
+    <div className="mx-auto">
       <h2 className="text-lg font-bold mb-4 text-center">Flip-A-Doodle-Doo</h2>
       <div className="flex flex-col items-center">
       {isGameOver && (
@@ -278,8 +249,9 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
           </span>
         </h2>
       </div>
+
       <div
-        className="grid grid-cols-3 gap-2 p-2 md:grid-cols-4 md:gap-4"
+        className="grid grid-cols-2 gap-2 p-2 md:grid-cols-3 md:gap-4"
         id="grid"
       >
         {cards.map(createCard)}
@@ -293,4 +265,4 @@ const BoardTwo: React.FC<BoardTwoProps> = ({ onComplete }) => {
   );
 }
 
-export default BoardTwo;
+export default BoardOne;
