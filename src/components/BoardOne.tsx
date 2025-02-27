@@ -231,7 +231,7 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
 
   return (
     <div className="mx-auto">
-      <h2 className="text-lg font-bold mb-4 text-center">Flip-A-Doodle-Doo</h2>
+      <h2 className="text-lg font-bold mb-4 text-center text-white">Flip-A-Doodle-Doo</h2>
       <div className="flex flex-col items-center">
       {isGameOver && (
         <>
