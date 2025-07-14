@@ -1,5 +1,5 @@
 {
-  "name": "flip-a-doodle-doo",
+  "name": "Echoes of Light",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,6 +12,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.8",
     "@tsparticles/preset-stars": "^3.2.0",
+    "dom-to-image-more": "^3.6.0",
+    "html2canvas": "^1.4.1",
     "react": "^19.0.0",
     "react-confetti": "^6.2.3",
     "react-dom": "^19.0.0",
@@ -32,7 +34,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
-    "typescript": "~5.7.2",
+    "typescript": "^5.8.3",
     "typescript-eslint": "^8.22.0",
     "vite": "^6.1.0"
   }

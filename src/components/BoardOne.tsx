@@ -13,6 +13,7 @@ import popSfx from '../assets/pop.mp3';
 import goofySfx from '../assets/goofy.mp3';
 import wowSfx from '../assets/wow.mp3';
 import niceSfx from '../assets/nice.mp3';
+import { useGameSession } from './GameSessionContext';
 
 interface Card {
   img: string;
@@ -32,6 +33,12 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [moves, setMoves] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const timerRef = useRef<number  | null>(null);
+  const [isTiming, setIsTiming] = useState(false);
+  const { setLevelStats } = useGameSession();
+
   const scoreSpan = useRef(null);
   const totalPairs = 3;
 
@@ -90,6 +97,10 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
     setScore(0);
     setIsGameOver(false);
     setFlippedCards([]);
+    setMoves(0);
+    setSeconds(0);
+    setIsTiming(false);
+    clearInterval(timerRef.current!);
 
     const shuffledCards = shuffleArray([...cardData]);
     setCards(shuffledCards);
@@ -118,6 +129,13 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
         return;
       }
 
+      if (!isTiming) {
+        setIsTiming(true);
+        timerRef.current = setInterval(() => {
+          setSeconds((s) => s + 1);
+        }, 1000);
+      }
+
       // Check if the card is already flipped before flipping
       if (cards.find((card) => card.id === cardId)?.isFlipped) {
         return;
@@ -135,12 +153,12 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
         return updatedCards;
       });
 
+      if (flippedCards.length === 1) {
+        setMoves((m) => m + 1);
+      }
+
       // Then, add the cardId to flippedCards
       setFlippedCards((prevFlippedCards) => [...prevFlippedCards, cardId]);
-
-      // if (flippedCards.length === 1) {
-      //   onFirstClick();
-      // }
     },
     [isGameOver, flippedCards, cards ]
   );
@@ -173,13 +191,21 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
 
     // Check if all pairs are matched
     if (score === totalPairs) {
+      clearInterval(timerRef.current!);
+      setIsTiming(false);
 
-    setIsGameOver(true);
+      setLevelStats('level1', {
+        moves,
+        seconds,
+      });
+
+      setIsGameOver(true);
+
       setTimeout(() => {
-        onComplete();
+        onComplete(); // go to next board
       }, 5000);
-      console.log("isGameOver:", isGameOver); // Check if isGameOver is true
     }
+
   }, [flippedCards, cards, score, isGameOver, wow, onComplete]);
 
   useEffect(() => {
@@ -204,9 +230,9 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
           key={card.id}
           data-id={card.id}
           data-alt={card.alt}
-          className={`card bg-gray-200 hover:bg-gray-300 cursor-pointer rounded ${
+          className={`card group relative bg-white/20 hover:bg-white/30 cursor-pointer rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl ${
             isGameOver ? "matched" : ""
-          }`}
+          } ${card.isFlipped ? "ring-2 ring-blue-400/50" : ""}`}
           onClick={() => {
             handleCardClick(card.id);
             playFlip();
@@ -216,11 +242,16 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
             <img
               src={card.img}
               alt="card"
-              className="transition-transform duration-500 ease-in-out transform rounded w-24 h-24 md:w-28 md:h-32 "
+              className="transition-all duration-500 ease-in-out transform rounded-lg sm:rounded-xl w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-32 object-cover shadow-lg"
             />
           ) : (
-            <div className="card-back card bg-gray-200 hover:bg-gray-300 cursor-pointer rounded w-24 h-24 md:w-28 md:h-32">
-              <img className="rounded w-24 h-24 md:w-28 md:h-32" src="https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/Level3/back.png?updatedAt=1740646785921" alt="" />
+            <div className="card-back relative overflow-hidden rounded-lg sm:rounded-xl w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-32 bg-gradient-to-br from-purple-500/30 to-blue-500/30 backdrop-blur-sm border border-white/20">
+              <img 
+                className="rounded-lg sm:rounded-xl w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" 
+                src="https://ik.imagekit.io/e3wiv79bq/echoes-of-light/Level3/back.png?updatedAt=1752512324481" 
+                alt="card back" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           )}
         </div>
@@ -229,40 +260,71 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
     [isGameOver, handleCardClick, playFlip]
   );
 
+  function formatTime(seconds: number) {
+    const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  }
+
   return (
-    <div className="mx-auto">
-      <h2 className="text-lg font-bold mb-4 text-center text-white">Flip-A-Doodle-Doo</h2>
-      <div className="flex flex-col items-center">
-      {isGameOver && (
-        <>
-          <div className="gameover">You won!</div>
-          <div>Loading next level...</div>
-        </>
+    <div className="px-3 sm:px-4 py-4 sm:py-6 text-white">
+      {/* Confetti */}
+      {isGameOver && showConfetti && (
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          <Confetti width={window.innerWidth} height={window.innerHeight} />
+        </div>
       )}
-      </div>
 
-      <div className="flex flex-col justify-items-start">
-      <h2 className="items-start">
-          Score:{" "}
-          <span ref={scoreSpan} id="score">
-            {score}
-          </span>
+      {/* Game Title */}
+      <div className="text-center mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          Echoes of Light
         </h2>
+        <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
       </div>
 
-      <div
-        className="grid grid-cols-2 gap-2 p-2 md:grid-cols-3 md:gap-4"
-        id="grid"
-      >
-        {cards.map(createCard)}
-      </div>
-      <div className="overflow-hidden">
-        {isGameOver && showConfetti && <Confetti />}
+      {/* Game Status */}
+      {isGameOver && (
+        <div className="text-center mb-6 sm:mb-8 animate-bounce px-4">
+          <div className="bg-gradient-to-r from-emerald-400/20 to-green-400/20 border border-emerald-400/40 rounded-xl p-3 sm:p-4 backdrop-blur-sm inline-block max-w-sm">
+            <div className="text-xl sm:text-2xl font-bold text-emerald-400 mb-1">🎉 You Won!</div>
+            <div className="text-xs sm:text-sm text-gray-300">Loading next level...</div>
+          </div>
+        </div>
+      )}
+
+      {/* Scoreboard */}
+      <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 mx-2 sm:mx-0">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-300 mb-1">SCORE</span>
+            <span className="text-base sm:text-lg md:text-xl font-bold text-yellow-300" id="score">{score}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-300 mb-1">MOVES</span>
+            <span className="text-base sm:text-lg md:text-xl font-bold text-blue-300">{moves}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-300 mb-1">TIME</span>
+            <span className="text-base sm:text-lg md:text-xl font-bold text-green-300">{formatTime(seconds)}</span>
+          </div>
+        </div>
       </div>
 
-      <RestartButton onRestart={handleRestart} disabled={animationsRunning} />
+      {/* Card Grid */}
+      <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-6 sm:mb-8">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 p-3 sm:p-4 md:grid-cols-3 md:gap-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+          {cards.map(createCard)}
+        </div>
+      </div>
+
+      {/* Restart */}
+      <div className="flex justify-center">
+        <RestartButton onRestart={handleRestart} disabled={animationsRunning} />
+      </div>
     </div>
   );
+
 }
 
 export default BoardOne;

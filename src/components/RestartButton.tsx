@@ -7,7 +7,7 @@ interface RestartButtonProps {
 
 const RestartButton: React.FC<RestartButtonProps> = ({ onRestart, disabled }) => {
   return (
-    <div className="flex justify-end mt-4 ">
+    <div className="flex justify-end mt-4 w-full">
       <button
         className="hover:bg-blue-400 bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         onClick={onRestart}
