@@ -216,39 +216,63 @@ export const FinalScore = () => {
         </div>
 
         {/* Footer */}
-        <div style={{
-          textAlign: 'center',
-          fontSize: '12px',
-          color: '#6b7280',
-          borderTop: '1px solid #e5e7eb',
-          paddingTop: '16px',
-          border: 'none'
-        }}>
-          <div style={{
-            borderTop: '1px solid #e5e7eb',
+        <div
+          style={{
+            textAlign: 'center',
+            fontSize: '12px',
+            color: '#6b7280',
             paddingTop: '16px',
-            marginBottom: '8px',
-            border: 'none'
-          }} />
-          <p style={{ 
-            margin: '0 0 4px 0', 
-            fontWeight: '500',
-            border: 'none' 
-          }}>
-            Made with ❤️ in <strong style={{ 
-              color: '#2563eb',
-              border: 'none' 
-            }}>Echoes of Light</strong>
+            border: 'none',
+          }}
+        >
+          <div
+            style={{
+              marginBottom: '8px',
+            }}
+          />
+
+          <img
+            src="src\assets\frame.png"
+            alt="Echoes of Light QR Code"
+            style={{
+              width: '160px',
+              height: '160px',
+              margin: '0 auto 8px',
+              display: 'block',
+              border: 'none',
+            }}
+          />
+
+          <p
+            style={{
+              margin: '0 0 4px 0',
+              fontWeight: '500',
+              border: 'none',
+            }}
+          >
+            Made with ❤️ in{' '}
+            <strong
+              style={{
+                color: '#2563eb',
+                border: 'none',
+              }}
+            >
+              Echoes of Light
+            </strong>
           </p>
-          <p style={{ 
-            margin: '0', 
-            fontSize: '11px',
-            opacity: '0.8',
-            border: 'none' 
-          }}>
-            https://flip-a-doodle-doo.netlify.app
+
+          <p
+            style={{
+              margin: '0',
+              fontSize: '11px',
+              opacity: '0.8',
+              border: 'none',
+            }}
+          >
+            https://echoes-of-light.netlify.app/
           </p>
         </div>
+
       </div>
 
 

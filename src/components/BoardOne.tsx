@@ -53,37 +53,37 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
   const cardData = useMemo(
     () => [
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/5.png?updatedAt=1740544753718",
+        img: "https://ik.imagekit.io/e3wiv79bq/echoes-of-light/5.png?updatedAt=1740544753718",
         id: uuidv4(),
         alt: 1,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/3.png?updatedAt=1740544753689",
+        img: "https://ik.imagekit.io/e3wiv79bq/echoes-of-light/3.png?updatedAt=1740544753689",
         id: uuidv4(),
         alt: 2,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/1.png?updatedAt=1740544754066",
+        img: "https://ik.imagekit.io/e3wiv79bq/echoes-of-light/1.png?updatedAt=1740544754066",
         id: uuidv4(),
         alt: 4,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/5.png?updatedAt=1740544753718",
+        img: "https://ik.imagekit.io/e3wiv79bq/echoes-of-light/5.png?updatedAt=1740544753718",
         id: uuidv4(),
         alt: 1,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/3.png?updatedAt=1740544753689",
+        img: "https://ik.imagekit.io/e3wiv79bq/echoes-of-light/3.png?updatedAt=1740544753689",
         id: uuidv4(),
         alt: 2,
         isFlipped: false,
       },
       {
-        img: "https://ik.imagekit.io/e3wiv79bq/flip-a-doodle-doo/1.png?updatedAt=1740544754066",
+        img: "https://ik.imagekit.io/e3wiv79bq/echoes-of-light/1.png?updatedAt=1740544754066",
         id: uuidv4(),
         alt: 4,
         isFlipped: false,
