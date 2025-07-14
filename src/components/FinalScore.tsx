@@ -232,7 +232,7 @@ export const FinalScore = () => {
           />
 
           <img
-            src="src\assets\frame.png"
+            src="https://ik.imagekit.io/e3wiv79bq/echoes-of-light/frame.png"
             alt="Echoes of Light QR Code"
             style={{
               width: '160px',
