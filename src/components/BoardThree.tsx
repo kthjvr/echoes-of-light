@@ -38,7 +38,7 @@ const BoardThree: React.FC<BoardThreeProps> = ({ onComplete }) => {
   const [isTiming, setIsTiming] = useState(false);
   const { setLevelStats } = useGameSession();
 
-  const scoreSpan = useRef(null);
+  // const scoreSpan = useRef(null);
   const totalPairs = 9;
 
   // for sound effects

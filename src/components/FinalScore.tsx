@@ -9,35 +9,32 @@ export const FinalScore = () => {
   const scoreRef = useRef<HTMLDivElement>(null);
 
   // For testing purposes only
-  const mockStats = {
-    level1: { moves: 6, seconds: 90 },
-    level2: { moves: 3, seconds: 150 },
-    level3: { moves: 16, seconds: 330 },
-  };
+  // const mockStats = {
+  //   level1: { moves: 6, seconds: 90 },
+  //   level2: { moves: 3, seconds: 150 },
+  //   level3: { moves: 16, seconds: 330 },
+  // };
 
   // Use mock instead:
-  const scores = mockStats;
-  const resetSession = () => {}; // no-op to avoid errors
+  // const scores = mockStats;
+  // const resetSession = () => {}; // no-op to avoid errors
 
-  // const { scores, resetSession } = useGameSession();
+  const { scores } = useGameSession();
 
-const handleDownloadImage = async () => {
-  const node = document.getElementById('screenshot-container');
-  if (!node) return;
+  const handleDownloadImage = async () => {
+    const node = document.getElementById('screenshot-container');
+    if (!node) return;
 
-  try {
-    const dataUrl = await domtoimage.toPng(node as HTMLElement);
-    const link = document.createElement('a');
-    link.download = 'flip-a-doodle-summary.png';
-    link.href = dataUrl;
-    link.click();
-  } catch (error) {
-    console.error('Image export failed:', error);
-  }
-};
-
-
-
+    try {
+      const dataUrl = await domtoimage.toPng(node as HTMLElement);
+      const link = document.createElement('a');
+      link.download = 'flip-a-doodle-summary.png';
+      link.href = dataUrl;
+      link.click();
+    } catch (error) {
+      console.error('Image export failed:', error);
+    }
+  };
 
 
   // Filter out nulls just in case

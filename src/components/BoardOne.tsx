@@ -39,7 +39,7 @@ const BoardOne: React.FC<BoardOneProps> = ({ onComplete }) => {
   const [isTiming, setIsTiming] = useState(false);
   const { setLevelStats } = useGameSession();
 
-  const scoreSpan = useRef(null);
+  // const scoreSpan = useRef(null);
   const totalPairs = 3;
 
   // for sound effects
